@@ -9,13 +9,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                // Replace this with your actual build steps
-                sh 'mvn clean install' // Example build step using Maven
-            }
-        }
-
         stage('Deploy Dev') {
             steps {
                 dir('DEV') {
