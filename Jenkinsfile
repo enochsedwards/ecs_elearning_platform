@@ -5,19 +5,21 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub repository
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kaffadu/skillsedgelab.git']])
+                checkout([$class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        userRemoteConfigs: [[url: 'https://github.com/kaffadu/skillsedgelab.git']]])
             }
         }
 
         stage('Deploy Dev') {
             steps {
-                -chdir('DEV') {
-                    // Deploy to the Dev environment using Terraform
-                    sh 'terraform init dev' // Initialize Terraform in the dev directory
-                    sh 'terraform apply -auto-approve dev' // Deploy using Terraform in the dev directory
+                script {
+                    dir('DEV') {
+                        // Deploy to the Dev environment using Terraform
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
-
-
             }
         }
 
@@ -30,46 +32,61 @@ pipeline {
 
         stage('Deploy Test') {
             steps {
-                -chdir('TESTING') {
-                    // Deploy to the Test environment using Terraform
-                    sh 'terraform init test'
-                    sh 'terraform apply -auto-approve test'
+                script {
+                    dir('TESTING') {
+                        // Deploy to the Test environment using Terraform
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
-                
             }
         }
 
         stage('Deploy Stage') {
             steps {
-                -chdir('TESTING') {
-                    // Deploy to the Stage environment using Terraform
-                    sh 'terraform init stage'
-                    sh 'terraform apply -auto-approve stage'
+                script {
+                    dir('STAGING') {
+                        // Deploy to the Stage environment using Terraform
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
             }
         }
 
         stage('Deploy Prod') {
             steps {
-                -chdir('PROD') {
-                    // Deploy to the Production environment using Terraform
-                    sh 'terraform init prod'
-                    sh 'terraform apply -auto-approve prod'
+                script {
+                    dir('PROD') {
+                        // Deploy to the Production environment using Terraform
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
             }
         }
 
         stage('Destroy') {
             steps {
-                // Destroy resources after deployment in each environment
-                sh 'terraform init dev'
-                sh 'terraform destroy -auto-approve dev'
-                sh 'terraform init test'
-                sh 'terraform destroy -auto-approve test'
-                sh 'terraform init stage'
-                sh 'terraform destroy -auto-approve stage'
-                sh 'terraform init prod'
-                sh 'terraform destroy -auto-approve prod'
+                script {
+                    dir('DEV') {
+                        // Destroy resources after deployment in each environment
+                        sh 'terraform init'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                    dir('TESTING') {
+                        sh 'terraform init'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                    dir('STAGING') {
+                        sh 'terraform init'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                    dir('PROD') {
+                        sh 'terraform init'
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
             }
         }
     }
