@@ -11,13 +11,13 @@ pipeline {
             }
         }
 
-        stage('Deploy Dev') {
+        stage('Deploy Prod') {
             steps {
                 script {
-                    dir('DEV') {
+                    dir('PROD') {
                         // Deploy to the Dev environment using Terraform
                         sh 'terraform init'
-                        sh 'terraform destroy -auto-approve -var-file=dev.tfvars'
+                        sh 'terraform apply -auto-approve -var-file=prod.tfvars'
                     }
                 }
             }
