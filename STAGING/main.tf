@@ -60,5 +60,6 @@ module "SEL-elearning-project" {
   ecs_service_platform_version      = var.ecs_service_platform_version
   lb_target_group_target_type       = var.lb_target_group_target_type
   domain_name                       = var.domain_name
+  alternative_name                  = var.alternative_name
 
 }
