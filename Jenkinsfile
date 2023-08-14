@@ -17,7 +17,7 @@ pipeline {
                     dir('DEV') {
                         // Deploy to the Dev environment using Terraform
                         sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve -var-file=dev.tfvars'
                     }
                 }
             }
@@ -36,7 +36,7 @@ pipeline {
                     dir('TESTING') {
                         // Deploy to the Test environment using Terraform
                         sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve -var-file=testing.tfvars'
                     }
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
                     dir('STAGING') {
                         // Deploy to the Stage environment using Terraform
                         sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve -var-file=staging.tfvars'
                     }
                 }
             }
@@ -60,7 +60,7 @@ pipeline {
                     dir('PROD') {
                         // Deploy to the Production environment using Terraform
                         sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve -var-file=prod.tfvars'
                     }
                 }
             }
@@ -72,19 +72,19 @@ pipeline {
                     dir('DEV') {
                         // Destroy resources after deployment in each environment
                         sh 'terraform init'
-                        sh 'terraform destroy -auto-approve'
+                        sh 'terraform destroy -auto-approve -var-file=dev.tfvars'
                     }
                     dir('TESTING') {
                         sh 'terraform init'
-                        sh 'terraform destroy -auto-approve'
+                        sh 'terraform destroy -auto-approve -var-file=testing.tfvars'
                     }
                     dir('STAGING') {
                         sh 'terraform init'
-                        sh 'terraform destroy -auto-approve'
+                        sh 'terraform destroy -auto-approve -var-file=staging.tfvars'
                     }
                     dir('PROD') {
                         sh 'terraform init'
-                        sh 'terraform destroy -auto-approve'
+                        sh 'terraform destroy -auto-approve -var-file=prod.tfvars'
                     }
                 }
             }
