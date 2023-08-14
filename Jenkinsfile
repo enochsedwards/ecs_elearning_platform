@@ -11,7 +11,7 @@ pipeline {
 
         stage('Deploy Dev') {
             steps {
-                dir('DEV') {
+                -chdir('DEV') {
                     // Deploy to the Dev environment using Terraform
                     sh 'terraform init dev' // Initialize Terraform in the dev directory
                     sh 'terraform apply -auto-approve dev' // Deploy using Terraform in the dev directory
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Deploy Test') {
             steps {
-                dir('TESTING') {
+                -chdir('TESTING') {
                     // Deploy to the Test environment using Terraform
                     sh 'terraform init test'
                     sh 'terraform apply -auto-approve test'
@@ -41,7 +41,7 @@ pipeline {
 
         stage('Deploy Stage') {
             steps {
-                dir('TESTING') {
+                -chdir('TESTING') {
                     // Deploy to the Stage environment using Terraform
                     sh 'terraform init stage'
                     sh 'terraform apply -auto-approve stage'
@@ -51,7 +51,7 @@ pipeline {
 
         stage('Deploy Prod') {
             steps {
-                dir('PROD') {
+                -chdir('PROD') {
                     // Deploy to the Production environment using Terraform
                     sh 'terraform init prod'
                     sh 'terraform apply -auto-approve prod'
