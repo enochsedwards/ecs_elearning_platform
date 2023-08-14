@@ -1,0 +1,65 @@
+variable "region" {}
+variable "project_name" {}
+variable "vpc_cidr" {}
+variable "instance_tenancy" {}
+variable "enable_dns_hostnames" {}
+variable "enable_dns_support" {}
+variable "public_cidrs" {}
+variable "private_cidrs" {}
+variable "availability_zone" {}
+variable "map_public_ip_on_launch" {}
+variable "SEL-rt" {}
+variable "role" {}
+variable "ingressrules" {
+    type        = list(number)
+    default     = []
+    description = "List of port numbers for ingress rules"
+}
+
+variable "egressrules" {
+    type        = list(number)
+    default     = []
+    description = "List of port numbers for egress rules"
+}
+variable "ingressrules_rds" {}
+variable "egressrules_rds" {}
+variable "subnet_ids" {}
+variable "allocated_storage" {}
+variable "engine" {}
+variable "engine_version" {}
+variable "instance_class" {}
+variable "db_name" {}
+variable "username" {}
+variable "password" {}
+variable "parameter_group_name" {}
+variable "skip_final_snapshot" {}
+variable "db_subnet_group_name" {}
+variable "internal" {}
+variable "load_balancer_type" {}
+variable "enable_deletion_protection" {}
+variable "environment" {}
+variable "lb-http-listener-port" {}
+variable "lb-http-listener-protocol" {}
+variable "lb-http-listener-type" {}
+variable "lb-https-listener-port" {}
+variable "lb-https-listener-protocol" {}
+variable "lb-https-listener-type" {}
+#variable "certificate_arn" {}
+variable "lb_target_group_port" {}
+variable "lb_target_group_protocol" {}
+#variable "lb_algorithm_type" {}
+variable "autoscaling_min_size" {}
+variable "autoscaling_max_size" {}
+variable "autoscaling_health_check_type" {}
+variable "autoscaling_instance_type" {}
+variable "ecs_task_family" {}
+variable "ecs_task_network_mode" {}
+variable "ecs_task_requires_compatibilities" {}
+variable "ecs_task_cpu" {}
+variable "ecs_task_memory" {}
+variable "ecs_service_desired_count" {}
+variable "ecs_service_launch_type" {}
+variable "ecs_service_platform_version" {}
+variable "lb_target_group_target_type" {}
+variable "domain_name" {}
+variable "alternative_name" {}
