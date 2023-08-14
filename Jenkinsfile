@@ -80,10 +80,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            // Clean up any temporary files or resources if needed
-        }
-    }
 }
