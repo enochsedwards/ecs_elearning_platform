@@ -1,4 +1,4 @@
-terraform {
+/*terraform {
   backend "s3" {
     bucket         = "skillsedgelab-s3statebackend"
     dynamodb_table = "sel-e-learning-dynamodbtable"
@@ -7,7 +7,7 @@ terraform {
     encrypt        = true
   }
 }
-
+*/
 
 
 # Configure the AWS Provider
