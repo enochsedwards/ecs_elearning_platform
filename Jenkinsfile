@@ -18,7 +18,7 @@ pipeline {
                 script {
                     dir('PROD') {
                         // Deploy to the Dev environment using Terraform
-                        sh 'terraform init'
+                        sh 'terraform init -reconfigure'
                         sh 'terraform apply -auto-approve -var-file=prod.tfvars'
                     }
                 }
