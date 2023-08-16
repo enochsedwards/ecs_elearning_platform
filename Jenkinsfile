@@ -17,14 +17,26 @@ pipeline {
             steps {
                 script {
                     dir('PROD') {
-                        // Deploy to the Dev environment using Terraform
-                        sh 'terraform init -reconfigure'
+                        // Deploy to the Prod environment using Terraform
+                        sh 'terraform init'
                         echo "Terraform action is --> ${action}"
-                        sh ("terraform ${action} --auto-approve")
+                        sh ("terraform ${action} --auto-approve -var-file=prod.tfvars")
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Dev') {
+            steps {
+                script {
+                    dir('DEV') {
+                        // Deploy to the Dev environment using Terraform
+                        sh 'terraform init'
+                        echo "Terraform action is --> ${action}"
+                        sh ("terraform ${action} --auto-approve -var-file=dev.tfvars")
                     }
                 }
             }
         }
     }
 }
-        
